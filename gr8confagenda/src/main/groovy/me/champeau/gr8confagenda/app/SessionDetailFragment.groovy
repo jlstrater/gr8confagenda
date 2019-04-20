@@ -95,7 +95,13 @@ class SessionDetailFragment extends Fragment {
             ((TextView) view.findViewById(R.id.session_detail_slot)).setText("${sessionItem.slot.startTime}-${sessionItem.slot.endTime}")
             def track = (TextView) view.findViewById(R.id.session_detail_track)
             track.setText(sessionItem.slot.trackName)
-            track.setBackgroundColor(Color.parseColor(sessionItem.slot.trackColor))
+            int backgroundColor = Color.parseColor(sessionItem.slot.trackColor)
+            if (backgroundColor < -3355444) {
+                track.setTextColor(-1)
+            } else {
+                track.setTextColor(-16777216)
+            }
+            track.setBackgroundColor(backgroundColor)
             ((TextView) view.findViewById(R.id.session_detail_speaker_detail)).setText(Html.fromHtml(speaker.bio))
             def twitter = (TextView) view.findViewById(R.id.session_detail_twitter)
             twitter.setText("@${speaker.twitter}")

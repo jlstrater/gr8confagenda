@@ -60,7 +60,7 @@ class SessionListAdapter extends ArrayAdapter<Session> {
     }
 
     SessionListAdapter(Context context) {
-        super(context,android.R.layout.simple_list_item_activated_1,
+        super(context, android.R.layout.simple_list_item_activated_1,
                 android.R.id.text1, [])
         notifyOnChange = false
         this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE)
@@ -68,7 +68,7 @@ class SessionListAdapter extends ArrayAdapter<Session> {
 
     @Override
     Filter getFilter() {
-        if (filter==null) {
+        if (filter == null) {
             filter = new SessionFilter(this)
         }
         filter
@@ -86,13 +86,19 @@ class SessionListAdapter extends ArrayAdapter<Session> {
         titleElem.setText(session.title)
         def trackElem = (TextView) view.findViewById(R.id.session_list_track)
         trackElem.setText(session.slot.trackName)
-        trackElem.setBackgroundColor(Color.parseColor(session.slot.trackColor))
+        int backgroundColor = Color.parseColor(session.slot.trackColor)
+        if (backgroundColor < -3355444) {
+            trackElem.setTextColor(-1)
+        } else {
+            trackElem.setTextColor(-16777216)
+        }
+        trackElem.setBackgroundColor(backgroundColor)
         def timeElem = (TextView) view.findViewById(R.id.session_list_time)
         String timeText = "${session.slot.startTime}\n${session.slot.endTime}"
         timeElem.setText(timeText)
 
         def starElem = (ImageView) view.findViewById(R.id.starred_session)
-        starElem.setVisibility(Application.instance.favorites.contains(session.id)?ImageView.VISIBLE:ImageView.GONE)
+        starElem.setVisibility(Application.instance.favorites.contains(session.id) ? ImageView.VISIBLE : ImageView.GONE)
 
         view
     }

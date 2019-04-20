@@ -174,6 +174,12 @@ class SessionListActivity extends FragmentActivity
         def bar = getActionBar()
         bar.navigationMode = ActionBar.NAVIGATION_MODE_TABS
 
+        updateTabDates(bar)
+    }
+
+    private void updateTabDates(ActionBar bar) {
+        bar.removeAllTabs()
+
         for(Date tabDate : tabDates()) {
             def tabName = tabDate.format(DATE_FORMAT)
             bar.addTab bar.newTab().setText(tabName).setTabListener(this)
